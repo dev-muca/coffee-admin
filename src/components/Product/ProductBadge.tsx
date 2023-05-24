@@ -12,7 +12,7 @@ export const iconList = [<MdAttachMoney size={48} />, <GiKnifeFork size={48} />,
 
 export function ProductBadge({ icon, content = "lorem ipsum dlor", value = 0 }: Props) {
   return (
-    <div className="w-700 h-24 border flex rounded-md">
+    <div className="w-700 h-20 border flex rounded-md">
       <div className="w-32 h-full bg-brown-300 text-white flex justify-center items-center rounded-l-md">
         {iconList[icon]}
       </div>

@@ -1,7 +1,10 @@
 type Props = {
   label: string;
   type?: string;
+  name: string;
   placeholder: string;
+  value: string;
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement> | any;
 };
 
 export function TextArea({ label, ...props }: Props) {

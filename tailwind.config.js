@@ -14,6 +14,7 @@ module.exports = {
         "brown-500": "#4A2C19",
       },
       width: {
+        94: "21.5rem",
         100: "400px",
         700: "700xp",
       },

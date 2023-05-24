@@ -3,7 +3,7 @@ import { NavLogo } from "./NavLogo";
 
 export function Navbar() {
   return (
-    <nav className="w-screen h-16 bg-brown-500 flex flex-row justify-around items-center">
+    <nav className="w-screen h-16 bg-brown-500 flex flex-row justify-around items-center absolute top-0 z-0">
       <NavLogo />
       <ul className="flex gap-4">
         <NavItem icon="add" text="novo produto" path="/cadastrar" />

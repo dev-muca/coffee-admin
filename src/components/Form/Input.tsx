@@ -1,7 +1,11 @@
 type Props = {
   label: string;
   type: string;
+  name: string;
   placeholder: string;
+  value: string | number;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  readonly?: true;
 };
 
 export function Input({ label, ...props }: Props) {

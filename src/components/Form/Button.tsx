@@ -1,16 +1,35 @@
-type Props = {
+import { BiLoaderAlt } from "react-icons/bi";
+
+type SubmitProps = {
   children: string;
-  color?: string;
+  type?: "button" | "submit" | "reset" | undefined;
+  loader?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-export function Button({ children, color, ...props }: Props) {
-  const manipulatedClass = color
-    ? `bg-${String(color)}-600 border text-white h-10 px-10 rounded`
-    : "bg-white text-zinc-500 h-10 border border-zinc-400 px-10 rounded";
-
+export function SubmitButton({ type, children, loader = false, ...props }: SubmitProps) {
   return (
-    <button {...props} className={manipulatedClass}>
-      {children.toUpperCase()}
+    <button
+      {...props}
+      className="w-60 bg-green-600 text-white h-10 border border-zinc-400 px-10 rounded flex justify-center items-center"
+    >
+      {loader ? <BiLoaderAlt size={24} className="animate-spin text-inherit" /> : <p>{children.toUpperCase()}</p>}
     </button>
+  );
+}
+
+type ClearProps = {
+  text: string;
+  onClick?: React.MouseEventHandler<HTMLInputElement>;
+};
+
+export function ClearButton({ text, ...props }: ClearProps) {
+  return (
+    <input
+      {...props}
+      type="button"
+      value={text.toUpperCase()}
+      className="w-60 bg-inherit text-zinc-400 h-10 border border-zinc-400 px-10 rounded flex justify-center items-center cursor-pointer"
+    />
   );
 }
