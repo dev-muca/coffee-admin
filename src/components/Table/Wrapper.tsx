@@ -1,4 +1,6 @@
-export function Wrapper({ children }: any) {
+import { Children } from "@/interfaces/Children";
+
+export function Wrapper({ children }: Children) {
   return (
     <div className="flex flex-col">
       <div className="overflow-x-auto">

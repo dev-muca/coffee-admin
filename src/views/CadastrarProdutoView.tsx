@@ -9,16 +9,15 @@ import { objectToFormUrlEncoded, TOKEN } from "../utils/formUtils";
 import Link from "next/link";
 import API from "../services/api";
 import Swal from "sweetalert2";
-import { ProductFormDataSchema } from "@/schemas/ProductSchema";
+import { Produto } from "@/types/Produto";
 
 export function CadastrarProdutoview() {
-  const [formData, setFormData] = useState<ProductFormDataSchema>({
+  const [formData, setFormData] = useState({
     nome: "",
     foto: "",
     preco: 0,
     descricao: "",
     idCategoria: 1,
-    token: TOKEN,
   });
 
   const [loader, setLoader] = useState(false);
@@ -30,7 +29,6 @@ export function CadastrarProdutoview() {
       preco: 0,
       descricao: "",
       idCategoria: 1,
-      token: TOKEN,
     });
   }
 
@@ -144,7 +142,7 @@ export function CadastrarProdutoview() {
           <div className="flex gap-8 items-center">
             <ClearButton text="Limpar campos" onClick={clearForm} />
             <SubmitButton type="submit" loader={loader}>
-              Cadastrar
+              cadastrar
             </SubmitButton>
           </div>
         </div>

@@ -1,64 +1,43 @@
-import API from "@/services/api";
-import { createContext, useState } from "react";
-import { ProductListDataSchema } from "../schemas/ProductSchema";
-import { TOKEN, objectToFormUrlEncoded } from "@/utils/formUtils";
+import { ReactNode, createContext, useState } from "react";
+import { Produto } from "../types/Produto";
+import { Http2ServerResponse } from "http2";
+import { Children } from "@/interfaces/Children";
+import { useApi } from "@/hooks/useApi";
 
-export const ProductContext = createContext({});
+export type ProdutoContextType = {
+  produto?: Produto[] | null;
+  getAllProdutos: () => Promise<void>;
+  getProdutoByID: (idProduto: number) => Promise<void>;
+  createProduto: (produto: Produto) => Promise<number>;
+  // updateProduto?: (idProduto: number, produto: Produto) => Promise<Http2ServerResponse>;
+  // deleteProdutoByID?: (idProduto: number) => Promise<Http2ServerResponse>;
+};
 
-function ProductProvider({ children }: any) {
-  const [produtos, setProdutos] = useState<ProductListDataSchema[]>([]);
-  const [error, setError] = useState("");
+export const ProdutoContext = createContext<ProdutoContextType>(null!);
 
-  async function getProdutos() {
-    try {
-      const response = await API.get("/produtos.php", {
-        params: {
-          token: TOKEN,
-        },
-      });
+function ProductProvider({ children }: Children) {
+  const [produto, setProduto] = useState<Produto[] | null>(null);
+  const API = useApi();
 
-      if (response.status === 200) setProdutos(response.data);
+  const getAllProdutos = async () => {
+    const data = await API.getAllProdutos();
+    setProduto(data);
+  };
 
-      if (response.status === 204) throw new Error("Nenhum produto cadastrado!");
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const getProdutoByID = async (idProduto: number) => {
+    const data = await API.getProdutoByID(idProduto);
+    setProduto(data);
+  };
 
-  async function getPRodutoById(idProduto: number) {
-    try {
-      const response = await API.get("/produtos.php", {
-        params: {
-          token: TOKEN,
-        },
-      });
-
-      if (response.status === 200) setProdutos(response.data);
-
-      if (response.status === 204) throw new Error("Nenhum produto cadastrado!");
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  async function updateProduto(idProduto: number, objProduto: object) {
-    const formEncodedData = objectToFormUrlEncoded({ idProduto, objProduto });
-
-    try {
-      const response = await API.put("/produto.php", formEncodedData, {
-        params: {
-          token: TOKEN,
-        },
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const createProduto = async (produto: Produto) => {
+    const data = await API.createProduto(produto);
+    return data;
+  };
 
   return (
-    <ProductContext.Provider value={{ getProdutos, updateProduto, produtos, setProdutos }}>
+    <ProdutoContext.Provider value={{ produto, getAllProdutos, getProdutoByID, createProduto }}>
       {children}
-    </ProductContext.Provider>
+    </ProdutoContext.Provider>
   );
 }
 

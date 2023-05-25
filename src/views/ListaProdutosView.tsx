@@ -1,38 +1,45 @@
-import { Form } from "@/components/Form/Form";
-import { TableHead } from "@/components/Table/TableHead";
-import { TableItem } from "@/components/Table/TableItem";
-import { Wrapper } from "@/components/Table/Wrapper";
-import { ProductContext } from "@/context/ProductContext";
 import { useContext, useEffect } from "react";
-import { ProductListDataSchema } from "@/schemas/ProductSchema";
+import { Form } from "@/components/Form/Form";
+import { Wrapper } from "@/components/Table/Wrapper";
+import { TableItem } from "@/components/Table/TableItem";
+import { TableHead } from "@/components/Table/TableHead";
+import { ProdutoContext, ProdutoContextType } from "@/context/ProductContext";
 
 export function ListaProdutosView() {
-  const { getProdutos, produtos, setProdutos }: any = useContext(ProductContext);
+  const { produto, getAllProdutos } = useContext<ProdutoContextType>(ProdutoContext);
 
   useEffect(() => {
-    getProdutos();
+    const load = async () => {
+      await getAllProdutos();
+    };
+
+    load();
   }, []);
 
-  useEffect(() => {
-    getProdutos();
-  }, [produtos]);
-
   return (
-    <main className="w-screen h-main flex justify-center items-center">
+    <main className="w-screen flex justify-center items-start mt-32">
       <Form title="Produtos disponíveis no cardápio">
         <Wrapper>
           <TableHead headers={["#", "Produto", "Descrição", "Preço", "Categoria", "Ações"]} />
           <tbody>
-            {produtos.map((produto: ProductListDataSchema) => (
-              <TableItem
-                key={produto.idProduto}
-                idProduto={produto.idProduto}
-                nome={produto.nome}
-                preco={produto.preco}
-                descricao={produto.descricao}
-                idCategoria={produto.idCategoria}
-              />
-            ))}
+            {produto ? (
+              produto.map((produto: any) => (
+                <TableItem
+                  key={produto.idProduto}
+                  idProduto={produto.idProduto}
+                  nome={produto.nome}
+                  preco={produto.preco}
+                  descricao={produto.descricao}
+                  idCategoria={produto.idCategoria}
+                />
+              ))
+            ) : (
+              <tr>
+                <td className="text-center py-4" colSpan={6}>
+                  Nenhum produto cadastrado!
+                </td>
+              </tr>
+            )}
           </tbody>
         </Wrapper>
       </Form>

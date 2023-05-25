@@ -1,19 +1,23 @@
+import { Children } from "@/interfaces/Children";
 import { BiLoaderAlt } from "react-icons/bi";
 
-type SubmitProps = {
-  children: string;
-  type?: "button" | "submit" | "reset" | undefined;
-  loader?: boolean;
+interface Props extends Children {
+  type: React.HTMLInputTypeAttribute;
+  loader: boolean | false;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-};
+}
 
-export function SubmitButton({ type, children, loader = false, ...props }: SubmitProps) {
+export function SubmitButton({ type, children, loader, ...props }: Props) {
   return (
     <button
       {...props}
       className="w-60 bg-green-600 text-white h-10 border border-zinc-400 px-10 rounded flex justify-center items-center"
     >
-      {loader ? <BiLoaderAlt size={24} className="animate-spin text-inherit" /> : <p>{children.toUpperCase()}</p>}
+      {loader ? (
+        <BiLoaderAlt size={24} className="animate-spin text-inherit" />
+      ) : (
+        <p>{children?.toString().toUpperCase()}</p>
+      )}
     </button>
   );
 }

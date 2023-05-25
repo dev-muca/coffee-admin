@@ -4,11 +4,9 @@ import Image from "next/image";
 
 export function NavLogo() {
   return (
-    <Link href="/">
-      <div className="flex gap-2 items-center">
-        <Image src={CoffeeImage} alt="Xícara com café" className="w-10" />
-        <h1 className="text-white text-2xl font-medium">Macieul's Coffee</h1>
-      </div>
-    </Link>
+    <div className="flex gap-2 items-center">
+      <Image src={CoffeeImage} alt="Xícara com café" className="w-10" />
+      <h1 className="text-white text-2xl font-medium">Macieul's Coffee</h1>
+    </div>
   );
 }

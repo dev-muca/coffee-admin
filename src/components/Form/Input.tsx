@@ -3,9 +3,8 @@ type Props = {
   type: string;
   name: string;
   placeholder: string;
-  value: string | number;
+  value: string | number | readonly string[] | undefined;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  readonly?: true;
 };
 
 export function Input({ label, ...props }: Props) {
