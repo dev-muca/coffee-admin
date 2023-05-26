@@ -10,8 +10,8 @@ export default function App({ Component, pageProps }: any) {
         <title>Macieul's Coffee • Painel Administrativo</title>
       </Head>
       <ProductProvider>
-        <Component {...pageProps} />
         <Navbar />
+        <Component {...pageProps} />
       </ProductProvider>
     </>
   );
