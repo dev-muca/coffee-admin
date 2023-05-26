@@ -1,5 +1,6 @@
+import { Produto } from "@/types/Produto";
 import { useContext, useEffect } from "react";
-import { Form } from "@/components/Form/Form";
+import { Title } from "@/components/Form/Title";
 import { Wrapper } from "@/components/Table/Wrapper";
 import { TableItem } from "@/components/Table/TableItem";
 import { TableHead } from "@/components/Table/TableHead";
@@ -17,32 +18,31 @@ export function ListaProdutosView() {
   }, []);
 
   return (
-    <main className="w-screen flex justify-center items-start mt-32">
-      <Form title="Produtos disponíveis no cardápio">
-        <Wrapper>
-          <TableHead headers={["#", "Produto", "Descrição", "Preço", "Categoria", "Ações"]} />
-          <tbody>
-            {produto ? (
-              produto.map((produto: any) => (
-                <TableItem
-                  key={produto.idProduto}
-                  idProduto={produto.idProduto}
-                  nome={produto.nome}
-                  preco={produto.preco}
-                  descricao={produto.descricao}
-                  idCategoria={produto.idCategoria}
-                />
-              ))
-            ) : (
-              <tr>
-                <td className="text-center py-4" colSpan={6}>
-                  Nenhum produto cadastrado!
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Wrapper>
-      </Form>
+    <main className="my-16 w-4/5 mx-auto">
+      <Title text="Cadastrar novo produto no cardápio" />
+      <Wrapper>
+        <TableHead />
+        <tbody>
+          {produto ? (
+            produto.map((produto: Produto) => (
+              <TableItem
+                key={produto.idProduto}
+                idProduto={produto.idProduto}
+                nome={produto.nome}
+                preco={produto.preco}
+                descricao={produto.descricao}
+                idCategoria={produto.idCategoria}
+              />
+            ))
+          ) : (
+            <tr>
+              <td className="text-center py-4" colSpan={6}>
+                Nenhum produto cadastrado!
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </Wrapper>
     </main>
   );
 }

@@ -4,12 +4,11 @@ import { TOKEN, objectToFormUrlEncoded } from "@/utils/formUtils";
 const API = axios.create({
   baseURL: "https://www.fateclins.edu.br/felipeMaciel/api/macieulsCoffee",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  params: { token: TOKEN },
 });
 
 export const useApi = () => ({
   getAllProdutos: async () => {
-    const response = await API.get("/produtos.php");
+    const response = await API.get("/produtos.php", { params: { token: TOKEN } });
     return response.data;
   },
 
@@ -24,7 +23,7 @@ export const useApi = () => ({
     return response.status;
   },
 
-  updateProduto: async (idProduto: number, produto: JSON) => {
+  updateProduto: async (idProduto: number, produto: object) => {
     const dataUrlEncoded = objectToFormUrlEncoded({ idProduto, produtoData: produto });
     const response = await API.put("/produto.php", dataUrlEncoded, { params: { token: TOKEN } });
     return response.status;

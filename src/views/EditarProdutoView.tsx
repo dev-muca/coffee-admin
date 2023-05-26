@@ -1,45 +1,49 @@
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { Produto } from "@/types/Produto";
 import { Form } from "@/components/Form/Form";
 import { Input } from "@/components/Form/Input";
+import { Title } from "@/components/Form/Title";
 import { TextArea } from "@/components/Form/TextArea";
-import { ClearButton, SubmitButton } from "@/components/Form/Button";
+import { SubmitButton } from "@/components/Form/Button";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { PhotoViewer } from "@/components/Form/PhotoViewer";
 import { ProdutoContext, ProdutoContextType } from "@/context/ProductContext";
-import { Produto } from "@/types/Produto";
+import { useRouter } from "next/router";
 
-export function EditarProdutoView(idProduto: number) {
+export function EditarProdutoView() {
+  const router = useRouter();
+  const idProduto = router.query.idProduto;
+
   const [loader, setLoader] = useState<boolean>(false);
   const { produto, getProdutoByID } = useContext<ProdutoContextType>(ProdutoContext);
 
-  const [produtoEditado, setProdutoEditado] = useState<Produto | any>({
-    idProduto: produto ? produto[0].idProduto : undefined,
-    nome: produto ? produto[0].nome : undefined,
-    descricao: produto ? produto[0].descricao : undefined,
-    preco: produto ? produto[0].preco : undefined,
-    foto: produto ? produto[0].foto : undefined,
-  });
-
-  useEffect(() => {
+  useMemo(() => {
     const load = async () => {
-      await getProdutoByID(idProduto);
+      await getProdutoByID(Number(idProduto));
     };
 
+    console.log(produto);
+
     load();
-  }, [idProduto]);
+  }, []);
 
   return (
     <main className="w-screen h-main flex justify-center items-center">
-      <Form title="editar informações do produto">
-        <Input
-          label="Nome do Produto:"
-          placeholder="Digite aqui o novo nome do produto"
-          name="nome"
-          type="text"
-          value={produto ? produto[0].nome : undefined}
-        />
+      <Form>
+        {produto && (
+          <>
+            <Title text={`Editar informações do produto: ${produto.nome}`} />
+            <Input
+              label="Nome do Produto:"
+              placeholder="Digite aqui o novo nome do produto"
+              name="nome"
+              type="text"
+              value={produto.nome}
+            />
+          </>
+        )}
 
-        <TextArea
+        {/* <TextArea
           label="Descrição do produto:"
           name="descricao"
           placeholder="Digite aqui a descrição do produto"
@@ -69,7 +73,7 @@ export function EditarProdutoView(idProduto: number) {
               Salvar
             </SubmitButton>
           </div>
-        </div>
+        </div> */}
       </Form>
     </main>
   );

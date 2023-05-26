@@ -11,7 +11,7 @@ export function SubmitButton({ type, children, loader, ...props }: Props) {
   return (
     <button
       {...props}
-      className="w-60 bg-green-600 text-white h-10 border border-zinc-400 px-10 rounded flex justify-center items-center"
+      className="w-60 bg-green-600 hover:bg-green-500 text-white h-10 px-10 rounded flex justify-center items-center"
     >
       {loader ? (
         <BiLoaderAlt size={24} className="animate-spin text-inherit" />
