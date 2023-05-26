@@ -1,5 +1,9 @@
 import axios from "axios";
-import { TOKEN, objectToFormUrlEncoded } from "@/utils/formUtils";
+import { objectToFormUrlEncoded } from "@/utils/formUtils";
+import { env } from "process";
+
+//04C78878FC183F4E780E99CA26CE975D46E9A801858C95DB7A484DBED539839C
+export const TOKEN = "04C78878FC183F4E780E99CA26CE975D46E9A801858C95DB7A484DBED539839C";
 
 const API = axios.create({
   baseURL: "https://www.fateclins.edu.br/felipeMaciel/api/macieulsCoffee",

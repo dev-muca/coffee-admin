@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/views/CadastrarProdutoView.tsx__OLD"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/views/CadastrarProdutoView.tsx__OLD", "src/pages/_app.jsx"],
   "exclude": ["node_modules"]
 }
