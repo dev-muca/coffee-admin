@@ -83,7 +83,7 @@ export function CadastrarProdutoview() {
   };
 
   return (
-    <main className="my-16">
+    <main className="mx-auto my-16">
       <Form onSubmit={handleSubmitForm}>
         <Title text="Cadastrar novo produto no cardápio" />
 
@@ -129,7 +129,9 @@ export function CadastrarProdutoview() {
         <PhotoViewer img_url={produto.foto} />
 
         <div className="w-full flex justify-between items-center">
-          <Link href="/">Voltar</Link>
+          <Link href="/" className="hover:underline">
+            Voltar
+          </Link>
 
           <div className="flex gap-8 items-center">
             <ClearButton text="Limpar campos" onClick={clearForm} />

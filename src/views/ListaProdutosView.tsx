@@ -9,7 +9,6 @@ import { formatToBRL } from "@/utils/formUtils";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
-import { title } from "process";
 
 export function ListaProdutosView() {
   const { getAllProdutos, deleteProdutoByID } = useContext<ProdutoContextType>(ProdutoContext);

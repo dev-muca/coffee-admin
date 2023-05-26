@@ -1,6 +1,5 @@
-import Link from "next/link";
-import CoffeeImage from "../../../public/assets/images/coffee.png";
 import Image from "next/image";
+import CoffeeImage from "../../../public/assets/images/coffee.png";
 
 export function NavLogo() {
   return (

@@ -84,7 +84,7 @@ export function EditarProdutoView() {
   };
 
   return (
-    <main className="w-screen h-main flex justify-center items-center">
+    <main className="mx-auto my-16">
       <Form onSubmit={handleSaveChangesProduct}>
         {produto && (
           <>
@@ -132,7 +132,9 @@ export function EditarProdutoView() {
         <PhotoViewer img_url={produto.foto} />
 
         <div className="w-full flex justify-between items-center">
-          <Link href="/produtos">Voltar</Link>
+          <Link href="/produtos" className="hover:underline">
+            Voltar
+          </Link>
           <div className="flex gap-8 items-center">
             <SubmitButton type="submit" loader={loader}>
               Salvar
