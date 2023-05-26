@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
+import { ReactNode, ReactElement, JSXElementConstructor } from "react";
 
 export interface Children {
-  children: ReactNode;
+  children: ReactNode | ReactElement<any, string | JSXElementConstructor<any>>;
 }

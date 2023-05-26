@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Swal from "sweetalert2";
-import { TOKEN } from "@/utils/formUtils";
+import { TOKEN, validateForm } from "@/utils/formUtils";
 import { Produto } from "@/types/Produto";
 import { useContext, useState } from "react";
 import { Form } from "@/components/Form/Form";
@@ -28,23 +28,12 @@ export function CadastrarProdutoview() {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    const monetaryValue = event.target.value;
-    typeof value == "number" ? Number(monetaryValue.toString().replace(",", ".")) : value;
-    setProduto((previousData) => ({ ...previousData, [name]: value }));
+    const treatedValue = typeof event.target.value == "number" ? Number(value.toString().replace(",", ".")) : value;
+    setProduto((previousData) => ({ ...previousData, [name]: treatedValue }));
   };
 
   const handleRadioChange = async (value: number) => {
     setProduto((previousData) => ({ ...previousData, idCategoria: value }));
-  };
-
-  const validateForm = () => {
-    const { nome, descricao, foto, preco } = produto;
-
-    if (!nome || !descricao || !foto || !preco) {
-      return false;
-    }
-
-    return true;
   };
 
   const clearForm = () => {
@@ -55,7 +44,7 @@ export function CadastrarProdutoview() {
     event.preventDefault();
     setLoader(true);
 
-    if (!validateForm()) {
+    if (!validateForm(produto)) {
       Swal.fire({
         icon: "info",
         title: "Preencha todos os campos!",
@@ -97,6 +86,7 @@ export function CadastrarProdutoview() {
     <main className="my-16">
       <Form onSubmit={handleSubmitForm}>
         <Title text="Cadastrar novo produto no cardápio" />
+
         <Input
           label="Nome do produto:"
           type="text"
@@ -105,6 +95,7 @@ export function CadastrarProdutoview() {
           value={produto.nome}
           onChange={handleInputChange}
         />
+
         <div className="flex flex-row justify-between items-center gap-8 mt-4">
           <TextArea
             label="Descrição do produto:"
@@ -113,8 +104,10 @@ export function CadastrarProdutoview() {
             value={produto.descricao}
             onChange={handleInputChange}
           />
+
           <RadioGroup label="Selecione o tipo:" onChangeState={handleRadioChange} />
         </div>
+
         <Input
           label="Valor do produto:"
           type="number"
@@ -123,6 +116,7 @@ export function CadastrarProdutoview() {
           value={produto.preco}
           onChange={handleInputChange}
         />
+
         <Input
           label="URL da Imagem:"
           type="text"
@@ -131,11 +125,15 @@ export function CadastrarProdutoview() {
           value={produto.foto}
           onChange={handleInputChange}
         />
+
         <PhotoViewer img_url={produto.foto} />
+
         <div className="w-full flex justify-between items-center">
           <Link href="/">Voltar</Link>
+
           <div className="flex gap-8 items-center">
             <ClearButton text="Limpar campos" onClick={clearForm} />
+
             <SubmitButton type="button" loader={loader}>
               Cadastrar
             </SubmitButton>

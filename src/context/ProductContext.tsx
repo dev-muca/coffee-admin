@@ -1,10 +1,12 @@
 import { useApi } from "@/hooks/useApi";
 import { Produto } from "../types/Produto";
 import { Children } from "@/interfaces/Children";
-import { ReactNode, createContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useState } from "react";
+import { TOKEN } from "@/utils/formUtils";
 
 export type ProdutoContextType = {
-  produto?: Produto | null;
+  produto: Produto;
+  setProduto: any;
   getAllProdutos: () => Promise<void>;
   getProdutoByID: (idProduto: number) => Promise<void>;
   createProduto: (produto: Produto) => Promise<number>;
@@ -14,18 +16,26 @@ export type ProdutoContextType = {
 
 export const ProdutoContext = createContext<ProdutoContextType>(null!);
 
-function ProductProvider({ children }: Children) {
-  const [produto, setProduto] = useState<any>(null);
+function ProductProvider({ children }: any) {
   const API = useApi();
+
+  const [produto, setProduto] = useState<Produto>({
+    nome: "",
+    foto: "",
+    preco: 0,
+    descricao: "",
+    idCategoria: 1,
+    token: TOKEN,
+  });
 
   const getAllProdutos = async () => {
     const data = await API.getAllProdutos();
-    setProduto(data);
+    return data;
   };
 
   const getProdutoByID = async (idProduto: number) => {
     const data = await API.getProdutoByID(idProduto);
-    setProduto(data);
+    return data;
   };
 
   const createProduto = async (produto: Produto) => {
@@ -45,7 +55,7 @@ function ProductProvider({ children }: Children) {
 
   return (
     <ProdutoContext.Provider
-      value={{ produto, getAllProdutos, getProdutoByID, createProduto, updateProduto, deleteProdutoByID }}
+      value={{ produto, setProduto, getAllProdutos, getProdutoByID, createProduto, updateProduto, deleteProdutoByID }}
     >
       {children}
     </ProdutoContext.Provider>

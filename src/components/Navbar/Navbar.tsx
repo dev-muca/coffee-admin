@@ -9,6 +9,7 @@ export function Navbar() {
         <NavLogo />
       </Link>
       <ul className="flex gap-4">
+        <NavItem icon="dash" text="início dashboard" path="/" />
         <NavItem icon="add" text="novo produto" path="/cadastrar" />
         <NavItem icon="list" text="lista dos produtos" path="/produtos" />
       </ul>

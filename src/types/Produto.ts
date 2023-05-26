@@ -6,4 +6,5 @@ export type Produto = {
   idCategoria: number;
   idProduto?: number;
   token?: string;
+  map?: (params: any) => any;
 };
