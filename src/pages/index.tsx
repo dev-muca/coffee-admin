@@ -1,4 +1,3 @@
-import { HomeView } from "@/views/HomeView";
 import { ProductCard } from "@/components/Product/ProductCard";
 import { ProductBadge } from "@/components/Product/ProductBadge";
 

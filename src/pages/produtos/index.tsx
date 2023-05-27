@@ -9,7 +9,6 @@ import { formatToBRL } from "@/utils/formUtils";
 import { FiEdit } from "react-icons/fi";
 import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
-import { useRouter } from "next/router";
 
 export default function Produtos() {
   const [produto, setProduto] = useState<any>();
