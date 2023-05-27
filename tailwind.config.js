@@ -8,6 +8,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      borderColor: {
+        "brown-300": "#A5673F",
+        "brown-400": "#643C21",
+        "brown-500": "#4A2C19",
+      },
       backgroundColor: {
         "brown-300": "#A5673F",
         "brown-400": "#643C21",

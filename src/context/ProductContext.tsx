@@ -7,7 +7,7 @@ export type ProdutoContextType = {
   getAllProdutos: () => Promise<void>;
   getProdutoByID: (idProduto: number) => Promise<void>;
   createProduto: (produto: Produto) => Promise<number>;
-  updateProduto: (idProduto: number, produto: Produto) => Promise<number>;
+  updateProduto: (produto: Produto) => Promise<number>;
   deleteProdutoByID: (idProduto: number) => Promise<number>;
 };
 
@@ -31,8 +31,8 @@ function ProductProvider({ children }: Children) {
     return httpStatusCode;
   };
 
-  const updateProduto = async (idProduto: number, produto: Produto) => {
-    const httpStatusCode = await API.updateProduto(idProduto, produto);
+  const updateProduto = async (produto: any) => {
+    const httpStatusCode = await API.updateProduto(produto);
     return httpStatusCode;
   };
 

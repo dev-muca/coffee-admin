@@ -1,5 +1,6 @@
 import axios from "axios";
 import { TOKEN, objectToFormUrlEncoded } from "@/utils/formUtils";
+import { Produto } from "@/types/Produto";
 
 const API = axios.create({
   baseURL: "https://www.fateclins.edu.br/felipeMaciel/api/macieulsCoffee",
@@ -23,8 +24,22 @@ export const useApi = () => ({
     return response.status;
   },
 
-  updateProduto: async (idProduto: number, produto: object) => {
-    const dataUrlEncoded = objectToFormUrlEncoded({ idProduto, produtoData: produto });
+  updateProduto: async (produto: Produto) => {
+    const { idProduto, nome, descricao, idCategoria, preco, foto, token } = produto;
+
+    const objToEncoded = {
+      idProduto,
+      produto: {
+        nome,
+        foto,
+        token,
+        preco,
+        descricao,
+        idCategoria,
+      },
+    };
+
+    const dataUrlEncoded = objectToFormUrlEncoded(objToEncoded);
     const response = await API.put("/produto.php", dataUrlEncoded, { params: { token: TOKEN } });
     return response.status;
   },
