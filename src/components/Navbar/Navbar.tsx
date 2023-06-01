@@ -1,17 +1,32 @@
-import { NavItem } from "./NavItem";
-import { NavLogo } from "./NavLogo";
 import Link from "next/link";
+import Image from "next/image";
+import Coffee from "../../../public/assets/images/coffee.png";
+import { NavItem } from "./NavItem";
+
+import { MdDashboard } from "react-icons/md";
+import { BiAddToQueue, BiListUl } from "react-icons/bi";
 
 export function Navbar() {
   return (
-    <nav className="w-screen h-16 bg-brown-500 flex flex-row justify-around items-center sticky top-0 z-0">
+    <nav className="w-screen h-16 bg-gradient-to-r from-yellow-950 to-orange-950 flex flex-row justify-around items-center sticky top-0 z-0">
       <Link href="/">
-        <NavLogo />
+        <div className="flex gap-2 items-center">
+          <Image src={Coffee} alt="Xícara com café" className="w-10" />
+          <h1 className="hidden text-white text-2xl font-medium md:block">Macieul's Coffee</h1>
+        </div>
       </Link>
-      <ul className="flex gap-4">
-        <NavItem icon="dash" text="início dashboard" path="/" />
-        <NavItem icon="add" text="novo produto" path="/cadastrar" />
-        <NavItem icon="list" text="lista dos produtos" path="/produtos" />
+      <ul className="flex gap-2 md:gap-4">
+        <NavItem text="Início Dashboard" navigate="/">
+          <MdDashboard size={28} />
+        </NavItem>
+
+        <NavItem text="Novo Produto" navigate="/novo">
+          <BiAddToQueue size={28} />
+        </NavItem>
+
+        <NavItem text="Lista de Produtos" navigate="/produtos">
+          <BiListUl size={30} />
+        </NavItem>
       </ul>
     </nav>
   );

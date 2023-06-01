@@ -1,17 +1,25 @@
-type Props = {
+import { formatToBRL } from "../../utilities/utilities";
+
+type InputProps = {
   label: string;
   type: string;
   name: string;
   placeholder: string;
-  value: string | number | readonly string[] | undefined;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string | number;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function Input({ label, ...props }: Props) {
+export function Input({ type, label, value, onChange, ...props }: InputProps) {
   return (
-    <label className="flex flex-col gap-1 mt-4">
-      <span>{label}</span>
-      <input {...props} className="border border-zinc-400 rounded px-2 py-1" />
+    <label className="w-full flex flex-col gap-1">
+      <span className="ml-1">{label}</span>
+      <input
+        {...props}
+        type={type}
+        className={`border rounded px-2 py-1 placeholder:text-left ${type == "number" ? "text-center" : ""}`}
+        value={value}
+        onChange={onChange}
+      />
     </label>
   );
 }

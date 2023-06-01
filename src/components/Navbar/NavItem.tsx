@@ -1,26 +1,28 @@
 import Link from "next/link";
-import { BiAddToQueue, BiListUl } from "react-icons/bi";
-import { MdDashboard } from "react-icons/md";
+import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
 
-type Props = {
-  icon: string;
+type NavItemProps = {
   text: string;
-  path: string;
+  navigate: string;
+  children: ReactNode;
 };
 
-export function NavItem({ icon, text, path }: Props) {
+export function NavItem({ text, navigate, children }: NavItemProps) {
+  const router = useRouter();
+
   return (
-    <li className="w-24 hover:border hover:border-white h-24  bg-brown-400 mt-8 rounded-b-md">
-      <Link href={path} className="w-full h-full flex flex-col gap-2 justify-center items-center text-white">
-        {icon === "add" ? (
-          <BiAddToQueue size={28} />
-        ) : icon === "list" ? (
-          <BiListUl size={28} />
-        ) : (
-          <MdDashboard size={28} />
-        )}
-        <p className="w-4/5 text-center font-medium text-xs">{text.toUpperCase()}</p>
-      </Link>
+    <li className="w-20 h-24 md:w-24 hover:border hover:border-white bg-gradient-to-bl from-yellow-900 to-orange-950 md:mt-8 rounded-b-md">
+      <button
+        onClick={() => router.push(navigate)}
+        className="w-full h-full flex flex-col gap-2 justify-center items-center text-white"
+      >
+        <p className="w-4/5 h-full text-center font-medium text-xs flex flex-col pt-7 md:pt-3 items-center gap-2">
+          {children}
+          <span className="uppercase hidden md:block">{text}</span>
+          <span className="md:hidden">{text.split(" ")[0]}</span>
+        </p>
+      </button>
     </li>
   );
 }

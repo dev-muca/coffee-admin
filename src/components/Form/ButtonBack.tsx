@@ -9,7 +9,7 @@ type ButtonProps = {
   navigate?: string;
 };
 
-export function Button({ children, className, type, loader, navigate, ...props }: ButtonProps) {
+export function ButtonBack({ children, className, type, loader, navigate, ...props }: ButtonProps) {
   const router = useRouter();
 
   return (
@@ -17,6 +17,7 @@ export function Button({ children, className, type, loader, navigate, ...props }
       {...props}
       type={type}
       onClick={(e) => {
+        e.preventDefault();
         navigate && router.push(navigate);
       }}
       className={`w-full md:w-[220px] h-10 rounded shadow ${className}`}
