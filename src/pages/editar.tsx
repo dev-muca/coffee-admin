@@ -9,21 +9,22 @@ import { API, TOKEN } from "@/services/api";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { Produto } from "@/components/interfaces/Produto";
 
-type ProdutoProps = {
-  idProduto?: number;
-  nome: string;
-  foto: string;
-  preco: number;
-  descricao: string;
-  idCategoria: number;
-  token: string;
-};
-
-export default function Editar({ props }: any) {
+export default function Editar() {
   //
   const router = useRouter();
 
+  const [loader, setLoader] = useState<boolean>(false);
+
+  const [produto, setProduto] = useState<Produto>({
+    nome: "",
+    descricao: "",
+    foto: "",
+    preco: 0,
+    idCategoria: 1,
+    token: TOKEN,
+  });
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     let idProduto = Number(params.get("idProduto"));
@@ -36,25 +37,14 @@ export default function Editar({ props }: any) {
     getProductData(idProduto);
   }, []);
 
-  const [loader, setLoader] = useState<boolean>(false);
-
-  const [produto, setProduto] = useState<ProdutoProps>({
-    nome: "",
-    descricao: "",
-    foto: "",
-    preco: 0,
-    idCategoria: 1,
-    token: TOKEN,
-  });
-
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     const treatedValue = typeof event.target.value == "number" ? Number(value.toString().replace(",", ".")) : value;
-    setProduto((previousData: ProdutoProps) => ({ ...previousData, [name]: treatedValue }));
+    setProduto((previousData: Produto) => ({ ...previousData, [name]: treatedValue }));
   };
 
   const handleOptionSelect = (value: number) => {
-    setProduto((previousData: ProdutoProps) => ({ ...previousData, idCategoria: value }));
+    setProduto((previousData: Produto) => ({ ...previousData, idCategoria: value }));
   };
 
   const validateAllFields = () => {
