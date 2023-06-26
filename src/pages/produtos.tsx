@@ -22,6 +22,8 @@ export default function Produtos() {
   const [produtos, setProdutos] = useState<ProdutoProps[]>([]);
   const [filter, setFilter] = useState<number>(0);
 
+  console.log("Renderizou!");
+
   useEffect(() => {
     const getAllProdutos = async () => {
       const data = await API.getAllProdutos();
@@ -31,15 +33,8 @@ export default function Produtos() {
     getAllProdutos();
   }, []);
 
-  useEffect(() => {
-    const getFilteredProducts = async (idCategoria: number) => {
-      const data = await API.getAllProdutos();
-      const filteredData = !!filter ? data.filter((item: Produto) => item.idCategoria == idCategoria) : data;
-      setProdutos(filteredData);
-    };
-
-    getFilteredProducts(filter);
-  }, [filter]);
+  const filteredProducts =
+    filter !== 0 && produtos.length > 0 ? produtos.filter((produto) => produto.idCategoria == filter) : [];
 
   const editProduto = (idProduto: number) => {
     router.push(`/editar?idProduto=${idProduto}`);
@@ -127,9 +122,37 @@ export default function Produtos() {
             </tr>
           </thead>
           <tbody>
-            {produtos.length > 0 ? (
+            {filter != 0 ? (
+              filteredProducts.length > 0 ? (
+                filteredProducts.map((produto: ProdutoProps) => (
+                  <tr key={produto.idProduto} className="bg-white border-b">
+                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{produto.nome}</td>
+                    <td className="hidden md:table-cell px-6 py-4">{produto.idCategoria == 1 ? "Bolo" : "Café"}</td>
+                    <td className="hidden md:table-cell px-6 py-4">{formatToBRL(produto.preco)}</td>
+                    <td className="px-6 py-4 flex flex-row justify-between md:justify-around gap-2">
+                      <button
+                        onClick={() => editProduto(produto.idProduto)}
+                        className="font-medium text-blue-400 00 hover:underline"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => deleteProduto(produto.idProduto)}
+                        className="font-medium text-red-600 00 hover:underline"
+                      >
+                        Deletar
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <td colSpan={4} className="text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                  Nenhum produto cadastrado 😕
+                </td>
+              )
+            ) : produtos.length > 0 ? (
               produtos.map((produto: ProdutoProps) => (
-                <tr className="bg-white border-b">
+                <tr key={produto.idProduto} className="bg-white border-b">
                   <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{produto.nome}</td>
                   <td className="hidden md:table-cell px-6 py-4">{produto.idCategoria == 1 ? "Bolo" : "Café"}</td>
                   <td className="hidden md:table-cell px-6 py-4">{formatToBRL(produto.preco)}</td>
